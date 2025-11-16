@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Eren.com Portfolio</title>
+    <style>
+        /* --- Smooth Scroll --- */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* --- Original Styles --- */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #0c0a09; 
+            color: #e5e7eb; 
+        }
+
+        .banner {
+            width: 100%;
+            height: 64px;
+            top: 0;
+            position: sticky;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 10;
+            background-color: rgba(12, 10, 9, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-sizing: border-box;
+        }
+
+        .name h2 {
+            margin: 0;
+            font-weight: 700;
+            text-shadow: 0 0 8px rgba(192, 132, 252, 0.5);
+        }
+
+        .info {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem; 
+            font-weight: 500;
+        }
+
+        /* NEW: Style for links in the banner */
+        .info a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .info span {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .info span:hover {
+            color: #c084fc; 
+            transform: scale(1.05);
+        }
+        
+        .about {
+            width: 100%;
+            min-height: 100vh; /* Minimum full viewport height */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem 2rem 6rem 2rem;
+            box-sizing: border-box;
+            position: relative; /* Needed for absolute positioning */
+            overflow: hidden; /* Clips background video */
+        }
+
+        .about .cap {
+            font-size: 2.8rem;
+            font-weight: 700; 
+            text-shadow: 0 0 15px rgba(0, 0, 0, 0.8), 0 0 5px rgba(167, 139, 250, 0.7);
+        }
+
+        .about .card {
+            width: 100%;
+            max-width: 600px;
+            background-color: rgba(10, 10, 15, 0.5); 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(167, 139, 250, 0.3);
+            border-radius: 15px;
+            margin-top: 2rem;
+            padding: 2.5rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), 0 0 20px rgba(167, 139, 250, 0.1);
+        }
+
+        .about .card p {
+            margin: 0;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #d1d5db; 
+        }
+
+        /* --- NEW: Background Video Styles --- */
+        .section-bg-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: 0; /* Behind overlay and content */
+            object-fit: cover;
+        }
+        
+        /* Ensure content sits on top of video/overlay */
+        .about .cap,
+        .about .card,
+        .about .mini-card-container,
+        .about .video-card,
+        .about .spotify-card { /* Added spotify-card */
+            position: relative;
+            z-index: 2;
+        }
+
+
+        /* --- Section-Specific Backgrounds --- */
+        #about-me {
+             background-image: url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnQyMm1jZ3FyYmh2c3g5M3o1Y2poeHhhNTZucW5qa2M3cXR2d25qNyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/p6EDJOPtyd0DJSuDef/giphy.gif');
+        }
+
+        #eap {
+            background-image: url('https://www.viverelondra.com/wp-content/uploads/2018/07/Come-imparare-la-lingua-inglese-1030x433.jpg');
+        }
+
+        #skills {
+            /* background-image removed, video is used instead */
+            background-color: #0c0a09; /* Fallback color */
+            justify-content: flex-start;
+            padding-top: 6rem;
+        }
+        
+        #skills .cap {
+            text-shadow: 0 0 10px rgba(0, 0, 0, 1), 0 0 20px rgba(0, 0, 0, 0.8);
+        }
+
+        #skills .card {
+            max-width: 550px; 
+            padding: 2.25rem; 
+            background-color: rgba(10, 10, 15, 0.9); 
+        }
+        #skills .card p {
+            font-size: 1rem; 
+            text-align: left; 
+        }
+        
+        #golf {
+             background-image: url('https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3c2pncGx1dHBwZTV3Nm9tbGlibmE2d21wNG9ia3o1djl4bjBmbjI4diZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3rMFbbrDNXztHKbGPR/giphy.gif');
+        }
+        
+        /* --- NEW: Music Section --- */
+        #music {
+             background-image: url('https://images.unsplash.com/photo-1458560871784-56d23406c091?q=80&w=1920&auto=format&fit=crop');
+        }
+        
+        /* --- NEW: Programming Section --- */
+        #programming {
+             background-image: url('https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3N2tsbDJpeDlzNmhnaTBueWVidnphdnd1N2N4NGtlaXdibHhkN2FweCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/V4NSR1NG2p0KeJJyr5/giphy.gif');
+        }
+        
+        /* NEW: Style for text card in Programming section */
+        #programming .card {
+            text-align: left;
+        }
+
+
+        #contact {
+             background-image: url('httpss://placehold.co/1920x1080/4a3a3a/e0e0e0?text=Contact');
+        }
+
+        /* --- NEW MINI-CARD STYLES --- */
+        .mini-card-container {
+            display: flex;
+            flex-wrap: wrap; 
+            justify-content: center;
+            align-items: center;
+            gap: 0; 
+            width: 100%;
+            max-width: 950px; 
+            margin-top: 2rem;
+            margin-bottom: 0; 
+        }
+        
+        /* Link wrapper for cards */
+        .card-link {
+            text-decoration: none; 
+            display: block; 
+        }
+
+        /* New wrapper to create space using padding */
+        .mini-card-wrapper {
+            padding: 0.75rem; 
+            box-sizing: border-box; 
+            transition: all 0.3s ease; 
+        }
+
+        .mini-card {
+            background-color: rgba(10, 10, 15, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(167, 139, 250, 0.3);
+            border-radius: 15px;
+            padding: 0;
+            width: 110px; 
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-sizing: border-box; 
+            overflow: hidden; 
+        }
+
+        /* Style for the image inside the card */
+        .mini-card-img {
+            width: 100%;
+            height: 70px;
+            object-fit: cover;
+        }
+
+        /* Container for the text content */
+        .mini-card-content {
+            padding: 0.75rem;
+        }
+
+        .mini-card h3 {
+            margin: 0 0 0.5rem 0;
+            color: #a78bfa; 
+            font-size: 1rem; 
+        }
+
+        .mini-card p {
+            margin: 0;
+            font-size: 0.85rem; 
+            color: #d1d5db;
+            line-height: 1.3;
+        }
+
+        /* Apply hover effect to the wrapper, but transform the card inside */
+        .mini-card-wrapper:hover {
+            z-index: 5; 
+        }
+
+        .mini-card-wrapper:hover .mini-card {
+            margin: -8px; 
+            height: 166px; 
+            border-color: #c084fc;
+            box-shadow: 0 8px 32px 0 rgba(167, 139, 250, 0.3);
+        }
+        
+        /* --- VIDEO CARD STYLES --- */
+        .video-card {
+            width: 100%;
+            max-width: 500px; 
+            background-color: rgba(10, 10, 15, 0.9); /* Made more opaque for readability */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(167, 139, 250, 0.3);
+            border-radius: 15px;
+            margin-top: 2rem;
+            padding: 1.5rem; 
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), 0 0 20px rgba(167, 139, 250, 0.1);
+        }
+
+        /* Make video responsive and fit the card */
+        .video-card video {
+            width: 100%;
+            height: auto;
+            border-radius: 10px; 
+            display: block; 
+        }
+        
+        /* Style for text inside the video card */
+        .video-card-text {
+            font-size: 1rem;
+            color: #d1d5db;
+            text-align: left;
+            line-height: 1.6;
+            margin-top: 0; 
+            margin-bottom: 1.5rem; 
+        }
+        
+        /* --- NEW: SPOTIFY CARD STYLES --- */
+        .spotify-card {
+            width: 100%;
+            max-width: 400px; 
+            background-color: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(167, 139, 250, 0.3);
+            border-radius: 15px;
+            margin-top: 2rem;
+            padding: 1.5rem; 
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), 0 0 20px rgba(167, 139, 250, 0.1);
+        }
+        
+        /* NEW: Text inside spotify card */
+        .spotify-card-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            text-align: left;
+            margin-top: 0;
+            margin-bottom: 1.5rem; /* Space between text and playlist */
+            color: #d1d5db;
+        }
+        
+        .spotify-card iframe {
+            border-radius: 12px;
+            width: 100%;
+            height: 352px;
+        }
+
+        /* --- CONTACT CARD STYLES --- */
+        #contact-card {
+            padding: 2rem;
+            text-align: left;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+        }
+        .contact-icon {
+            width: 28px;
+            height: 28px;
+            margin-right: 1rem;
+            color: #a78bfa; /* Theme purple */
+            stroke-width: 1.5;
+        }
+        #contact-card a {
+            color: #e5e7eb;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            word-break: break-all; /* Ensure email doesn't overflow */
+        }
+        #contact-card a:hover {
+            color: #c084fc;
+            text-decoration: underline;
+        }
+        
+        /* Programming card styles removed */
+
+        .footer {
+            background-color: #000000; 
+            width: 100%;
+            height: 130px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #9ca3af;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- Dot navigation container --- */
+        .scroll-dots {
+            position: fixed;
+            right: 2rem; 
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+        }
+
+        .scroll-dots ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem; 
+        }
+
+        /* --- Individual dots --- */
+        .scroll-dots .dot {
+            display: block;
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* --- Active and hover state for dots --- */
+        .scroll-dots .dot:hover,
+        .scroll-dots .dot.active {
+            background-color: #a78bfa; 
+            transform: scale(1.2);
+        }
+
+        /* --- Scroll down button --- */
+        .scroll-down-btn {
+            position: absolute;
+            bottom: 2rem; 
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 15;
+            color: rgba(255, 255, 255, 0.7);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+        
+        .scroll-down-btn svg {
+            width: 2.5rem; 
+            height: 2.5rem; 
+        }
+
+        .scroll-down-btn:hover {
+            color: #a78bfa;
+        }
+
+        /* --- Bounce animation for the arrow --- */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translate(-50%, 0);
+            }
+            40% {
+                transform: translate(-50%, -15px);
+            }
+            60% {
+                transform: translate(-50%, -8px);
+            }
+        }
+
+        /* --- MODAL STYLES --- */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 100; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; 
+            background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #1a1a1a; /* Dark background */
+            margin: auto;
+            padding: 2.5rem;
+            border: 1px solid rgba(167, 139, 250, 0.3);
+            border-radius: 15px;
+            width: 80%;
+            max-width: 800px;
+            height: 70vh; /* 70% of the viewport height */
+            overflow-y: auto; /* Scrollable content */
+            position: relative;
+            color: #d1d5db;
+            text-align: left; /* Easier to read */
+            line-height: 1.7;
+        }
+        
+        /* NEW: Image style for inside the modal */
+        .modal-img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            display: block;
+            margin: 0 auto 1.5rem auto; /* Center it and add space below */
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .modal-content h2 {
+            color: #a78bfa;
+            border-bottom: 2px solid #a78bfa;
+            padding-bottom: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        /* NEW: Subheading for interpretation */
+        .modal-content h3 {
+            color: #c084fc;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .modal-content h2:first-of-type {
+            margin-top: 0;
+        }
+        
+        .modal-content p {
+            margin-bottom: 1.5rem;
+            white-space: pre-wrap; /* Preserves formatting like line breaks */
+        }
+        
+        .modal-content hr {
+            border: 0;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 2rem 0;
+        }
+
+        .close-modal {
+            color: #aaa;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus {
+            color: #fff;
+            text-decoration: none;
+        }
+
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+
+    <!-- Header Banner -->
+    <div class="banner">
+        <div class="name">
+            <h2>Eren.com</h2>
+        </div>
+        <div class="info">
+            <!-- FIX: Wrapped spans in <a> tags -->
+            <a href="#about-me"><span class="aboutt">About Me</span></a>
+            <a href="#contact"><span class="contactt">Contact</span></a>
+            <!-- FIX: Removed Log In and Sign Up buttons -->
+        </div>
+    </div>
+
+    <!-- Scroll Dot Navigation -->
+    <nav class="scroll-dots">
+        <ul>
+            <li><a href="#about-me" class="dot active"></a></li>
+            <li><a href="#eap" class="dot"></a></li>
+            <li><a href="#skills" class="dot"></a></li>
+            <li><a href="#golf" class="dot"></a></li>
+            <!-- NEW: Added Music and Programming dots -->
+            <li><a href="#music" class="dot"></a></li>
+            <li><a href="#programming" class="dot"></a></li>
+            <li><a href="#contact" class="dot"></a></li>
+        </ul>
+    </nav>
+
+    <!-- Section 1: About Me -->
+    <section class="about" id="about-me">
+        <div class="cap">About Me</div>
+        <div class="card">
+            <p>
+                Hi, my name is Eren. I was born in Bursa, but I have spent most of my life in Istanbul. 
+                I am currently studying in an IFP (International Foundation Programme).
+                Hopefully, I will be moving to Trinity College next year. 
+                My major will be Computer Science. 
+                I chose this course because I really enjoy messing with computers. Besides computers, I love playing video games, swimming, listening to music, and golf. Golf holds a very important place in my life, and I have achieved nationwide 
+                trophies in my golf career. </p>
+        </div>
+        <a href="#eap" class="scroll-down-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+            </svg>
+        </a>
+    </section>
+
+    <!-- Section 2: EAP -->
+    <section class="about" id="eap">
+        <div class="cap">EAP</div>
+        
+        <div class="mini-card-container">
+            
+            <!-- Card 1: Portfolio Pop-up -->
+            <div class="mini-card-wrapper" id="open-portfolio-btn">
+                <div class="mini-card">
+                    <img src="folder/wri.jpg" alt="Writing" class="mini-card-img"  onerror="this.src='https://placehold.co/110x70/2a2a3a/e0e0e0?text=Writing';">
+                    <div class="mini-card-content">
+                        <h3>EAP Writting</h3>
+                        <p>View documents.</p>
+                        <p>(click)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: From Darkness Pop-up -->
+            <div class="mini-card-wrapper" id="open-feature-2">
+                <div class="mini-card">
+                    <img src="folder/images.jpg" alt="Animated" class="mini-card-img"  onerror="this.src='https://placehold.co/110x70/2a2a3a/e0e0e0?text=Animated';">
+                    <div class="mini-card-content">
+                        <h3>From Darkness</h3>
+                        <p>View story.</p>
+                        <p>(click)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Tír na nÓg Pop-up -->
+            <div class="mini-card-wrapper" id="open-feature-3">
+                <div class="mini-card">
+                    <img src="folder/download.jpg" alt="Mythology" class="mini-card-img"  onerror="this.src='httpss://placehold.co/110x70/2a2a3a/e0e0e0?text=Mythology';">
+                    <div class="mini-card-content">
+                        <h3>Tír na nÓg</h3>
+                        <p>View legend.</p>
+                        <p>(click)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4: Urashima Tarō Pop-up -->
+            <div class="mini-card-wrapper" id="open-feature-4">
+                <div class="mini-card"> 
+                    <img src="folder/uri.jpg" alt="Illustration" class="mini-card-img" onerror="this.src='httpss://placehold.co/110x70/2a2a3a/e0e0e0?text=Illustration';">
+                    <div class="mini-card-content">
+                        <h3>Urashima Tarō</h3>
+                        <p>View story.</p>
+                        <p>(click)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5: Salmon of Knowledge Pop-up -->
+            <div class="mini-card-wrapper" id="open-feature-5">
+                <div class="mini-card">
+                    <img src="folder/de.jpg" alt="Irish Legend" class="mini-card-img" onerror="this.src='httpss://placehold.co/110x70/2a2a3a/e0e0e0?text=Legend';">
+                    <div class="mini-card-content">
+                        <h3>Salmon of Knowledge</h3>
+                        <p>View legend.</p>
+                        <p>(click)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEW: Card 6: Adam and Eve Pop-up -->
+            <div class="mini-card-wrapper" id="open-feature-6">
+                <div class="mini-card"> 
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv7LqXryE04PyiM2Gbat9sx_gCfs1CwMZxDDkClgoQDS4jKqM_JUqgiK5HFHAD81PaAj8&usqp=CAU" alt="Adam and Eve" class="mini-card-img">
+                    <div class="mini-card-content">
+                        <h3>Adam & Eve</h3>
+                        <p>View story.</p>
+                        <p>(click)</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <a href="#skills" class="scroll-down-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+            </svg>
+        </a>
+    </section>
+
+    <!-- Section 4: My Skills (Now Hobbies) -->
+    <section class="about" id="skills">
+        
+        <!-- NEW: Background Video -->
+        <video class="section-bg-video" autoplay loop muted playsinline>
+            <source src="folder/KUOL6404.MP4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        
+        <div class="cap">My Hobbies</div>
+        <div class="card">
+            <!-- FIX: Updated Hobbies text -->
+            <p style="line-height: 1.7;">
+                I have a lot of interests, including golf, playing guitar, programming, and watching football. Between the ages of 14 and 18, I spent most of my life on golf courses. Listening to music always helped when I traveled or practiced my swing at the range. Growing up, I listened to music like Bon Jovi, Journey, and ACDC.Now, I'm leaning more towards playing guitar and can already play a few songs, such as "Come as You Are" by Nirvana and "Notion."My other hobbies include swimming and watching my favourite team, Galatasaray. I don't know if watching Galatasaray really counts as a hobby; as long as I can remember, I’ve been a Gala fan. Everyone in my family supports them too, so it has become a family tradition.Besides these, I also enjoy hiking and have already been to many places in Ireland, like Howth and Wicklow. Lastly, thanks to my friend Andres, I’verecently taken up a new hobby: reading. On his recommendation, I’m currently reading The Stranger by Albert Camus.
+            </p>
+        </div>
+        <a href="#golf" class="scroll-down-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+            </svg>
+        </a>
+    </section>
+
+    <!-- Section 5: Golf -->
+    <section class="about" id="golf">
+        <div class="cap">Golf</div>
+        
+        <div class="video-card">
+            <p class="video-card-text">
+                I was first introduced to golf at the age of 13 by my father’s cousin. I caddied for him for one round, really liked it, and took a golf lesson that same day. Unfortunately, just as I was getting started, the Coronavirus pandemic began, so I couldn't start playing seriously until I was 15. Once I started, I took a lot of lessons and practiced constantly. By the age of 18, I had reached a 9.0 handicap (HCP).
+                I won several tournaments, including four U18 TGF (Turkish Golf Federation) tournaments and the Kassis U18 Golf Club Championship. Additionally, I placed third in the U18 US KIDS. This is one of the most well-known junior tournaments; a lot of professionals played in it when they were young, including 4-time major champion Scottie Scheffler. Finally, I was invited to the national team tryouts, but I just missed my chance, finishing three places short.
+            </p>
+            <video controls loop playsinline style="width: 100%; height: 300px; border-radius: 15px;">
+                <source src="folder/v1c044g50000d4adai7og65qt3fdnbhg.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <!-- FIX: Updated href to point to #music -->
+        <a href="#music" class="scroll-down-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+            </svg>
+        </a>
+    </section>
+
+    <!-- NEW: Section 6: Music -->
+    <section class="about" id="music">
+        <div class="cap">Music</div>
+        
+        <!-- FIX: Combined text and spotify into one card -->
+        <div class="spotify-card">
+            <!-- FIX: Updated music text -->
+            <p class="spotify-card-text">
+                Because music is such a huge part of my life, I know I'm not alone in feeling that way. It’s always there for me, no matter what I'm doing. That's exactly why I felt inspired to add a new section where I can share my personal playlist with you all.
+            </p>
+            <!-- 
+                TODO: Replace the 'src' link below with your own Spotify embed link.
+            -->
+            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/1MHvK2dSILZDk9xMUeKrg6?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+        
+        <!-- NEW: Scroll arrow -->
+        <a href="#programming" class="scroll-down-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+            </svg>
+        </a>
+    </section>
+
+    <!-- NEW: Section 7: Programming -->
+    <section class="about" id="programming">
+        <div class="cap">Programming</div>
+        <div class="card" style="text-align: left;">
+            <!-- FIX: Updated programming text -->
+            <p style="margin: 0; line-height: 1.7;">
+                Over the past year, I completed an internship-like experience with a company called 8 Bitiz. I have learned HTML, CSS, JavaScript, and a basic understanding of Python.
+            </p>
+        </div>
+        <!-- NEW: Scroll arrow -->
+        <a href="#contact" class="scroll-down-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+            </svg>
+        </a>
+    </section>
+
+
+    <!-- UPDATED: Section 8: Contact -->
+    <section class="about" id="contact">
+        <div class="cap">Contact</div>
+        <!-- FIX: Replaced placeholder with new contact info -->
+        <div class="card" id="contact-card">
+            <div class="contact-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="contact-icon">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                </svg>
+                <a href="mailto:derenifp25@momail.mie.ie">derenifp25@momail.mie.ie</a>
+            </div>
+            <div class="contact-item">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="contact-icon">
+                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke-width="1.5"></rect>
+                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" stroke-width="1.5"></path>
+                   <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="1.5" stroke-linecap="round"></line>
+                </svg>
+                <a href="https://www.instagram.com/eren.delituna/" target="_blank">@eren.delituna</a>
+            </div>
+        </div>
+        <!-- No Scroll Down Arrow on the last section -->
+    </section>
+
+    
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 Eren.com. All Rights Reserved.</p>
+    </div>
+
+    <!-- MODALS -->
+    
+    <!-- Portfolio Modal (Feature 1) -->
+    <div id="portfolio-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-modal">&times;</span>
+            
+            <h2>Annotated Bibliography 1</h2>
+            <p>Ali, T. , Haussain, H. , Mahpar T. , Kainat M.,. (2025). ‘Leveraging AI and Machine Learning to Detect and Prevent Cyber Security Threats’. Dialogue Social Science Review (DSSR) from https://thedssr.com/index.php/2/article/view/225
+
+This article is researching how ML (Machine Learning) and AI (Artificial Intelligence) can be applied in the security field and how they can be helpful in the cybersecurity field. The Authors researched AI response time, detection accuracy, and success rates against cyber threats. The authors made their research based on the statistics. For instance, they compared a traditional rule-based system to an ML algorithm.Then the authors analysed that ML increased threat detection by 95.7% compared to a traditional rule-based system. The Authors focused on how accurately AI can detect cyber threats and how quickly AI can respond compared to traditional rule-based systems. This article can be beneficial for my topic. The article shows how ML and AI can mitigate unauthorized access and be effectively used in the cybersecurity field. The limitations of artificial intelligence are that it provides strong results. But still, the article is not entirely clear from the abstract. Further, this article discusses how ML and AI can be helpful in the cybersecurity field, and also how AI and ML can decrease expenses in cybersecurity. This article can be handy for my research. The article gives evidence about how AI and ML improve efficiency in cybersecurity. Also, the article offers strong data about AI accuracy and success rate. But even though the text provided for data, some of the things are off because some of them are prototypes and still not officially proven.
+            <hr>
+            
+            <h2>Annotated Bibliography 2</h2>
+            <p>Alhayan, Fatimah; Alshuhail, Asma; Ismail, Ahmed Omer Ahmed; Alrusaini, Othman; Alhamari, Sultan; Yahya, Absulsamed Ebrahim; Abdullah,Monir; Al Zanin, Samah;(2025) "Artificial intelligence-driven cybersecurity: enhancing malicious domain detection using attention-based deep learning model with optimization algorithms. "Scientific Reports. 7/3/2025, Vol. 15 Issue 1, p1-18. 18p.
+
+This article is basically about how AI can detect to malicious domains and explaining how IP (Internet Protocol) and DNS (Domain Name System) work. The AI based threat detection using an Attention-Based Deep Learning Model with Optimization Algorithms (EMDD-ADLMOA) technique. Basically, this algorithm analyses nearly all the domains in the world. After that, feedback of this analysis using this data with deep learning and machine learning it’s creating own algorithms. In the article Author said this new cutting-edge tech purpose revolutionary improvement in the malicious domain detection in cybersecurity field. This cutting-edge tech purpose to bearish the numbers in cybercrime. Furthermore, the authors presented us some valid evidence that EMDD-ADLMOA accuracy value of 98.52% over existing techniques. The one of the downsides of the article the authors didn’t talk about of side effects of giving all the data to AI. However, the article still gives clear and valid explanations. Using this paper, I can explain better how IP and DNS work and how AI catches to malicious domains using algorithms and deep learning. Finally, I can use this article for explain my essay topic more clearly and more understandably.</p>
+            
+            <hr>
+            
+            <h2>Annotated Bibliography 3</h2>
+            <p>Bhardwaj, A., Goundar, S., & Goundar, S. (2022). "Artificial Intelligence and Machine Learning in Cybersecurity." In Cyber Security: A Comprehensive Guide (pp. 165-183). Springer, Cham.
+
+This book chapter provides a foundational overview of the key areas where AI and ML offer significant help. The authors detail the transition from traditional, signature-based security to modern, behavior-based models. The primary benefit highlighted is proactive threat detection . The chapter explains how ML models can analyze vast amounts of network traffic to identify subtle patterns and anomalies that signal new, previously unknown attacks (zero-day exploits), which older systems would miss. It serves as an excellent starting point for understanding the practical value of AI in moving from a reactive to a predictive security posture.</p>
+            
+            <hr>
+
+            <h2>Annotated Bibliography 4</h2>
+            <p>Sarker, I. H., Kayes, A. S. M., Badsha, S., Alqahtani, H., Watters, P., & Ng, A. (2020). "Cybersecurity data science: an overview, taxonomy, and future directions." ACM Computing Surveys (CSUR) , 53(1), 1-39.
+
+This comprehensive survey article details how data science, powered by ML, helps solve complex cybersecurity problems. The authors categorize the applications, offering a clear taxonomy of how AI helps. Key applications discussed include intrusion detection systems (IDS) , malware analysis , and phishing detection . For instance, the article explains that ML algorithms can be trained to analyze the content, sender, and metadata of emails to identify phishing attempts with much higher accuracy than static rule-based filters. This source is particularly useful for its breadth and its clear classification of AI's supportive roles.</p>
+            
+            <hr>
+            
+            <h2>EAP Debate</h2>
+            <p>“We should all travel less to help the environment debate”
+
+Arguments
+Carbon Emissions
+
+1. Airplanes produce massive CO₂ emissions per passenger
+A round-trip flight from London to New York emits about 1.6 tonnes of CO₂ per passenger —that’s nearly the same as the average person’s annual carbon footprint in countries like India .
+Aviation fuel combustion also releases nitrogen oxides and water vapor at high altitudes , forming contrails that trap heat— doubling aviation’s warming effect beyond just CO₂ emissions.
+Planes burn 3–4 litres of fuel per passenger per 100 km , which is far higher than trains or electric vehicles. 🡒 Cutting even one long-haul flight a year per person can drastically lower individual emissions.
+
+2. Short-distance travel is highly inefficient
+Short-haul flights (under 1,500 km) are the most polluting per kilometre because takeoff and landing burn most of the fuel.
+For example, a 300 km flight emits about 5 times more CO₂ than taking the train for the same journey.
+Replacing short flights with high-speed rail can reduce emissions by up to 90% per trip . 🡒 If everyone avoided unnecessary short flights, total aviation emissions could drop by 10–20% globally.
+
+3. Cars remain one of the biggest emitters of greenhouse gases
+Road transport produces about 15% of global CO₂ emissions , mainly from private vehicles.
+Most car trips are short— under 5 km , yet they release high levels of pollutants like carbon monoxide, nitrogen oxides, and particulate matter.
+Reducing personal car travel—especially by switching to cycling, walking, or public transport —directly cuts emissions and urban air pollution. 🡒 Less driving means cleaner air, quieter cities, and lower oil demand.
+
+4. Tourism contributes heavily to climate change
+The global tourism industry is responsible for around 8% of total greenhouse gas emissions , including air, sea, and land travel, plus accommodation and food.
+Popular destinations like Venice, Bali, and the Alps are suffering from over-tourism , which leads to waste, energy overuse, and ecosystem damage. 🡒 Traveling less or more locally reduces tourism’s strain on both climate and fragile environments.
+
+5. Cruise ships are extremely polluting
+A single large cruise ship emits as much particulate matter in a day as one million cars .
+They burn heavy fuel oil , one of the dirtiest fossil fuels, releasing sulfur dioxide, nitrogen oxides, and soot that damage marine and air quality. 🡒 Choosing not to travel by cruise ship, or avoiding unnecessary cruises, makes a measurable difference.
+
+6. Frequent business travel is often unnecessary
+Academic and corporate air travel—especially conferences—accounts for millions of tonnes of CO₂ per year .
+Virtual meetings or hybrid events can achieve the same results with up to 98% lower emissions . 🡒 Reducing business travel is one of the fastest, easiest ways to cut institutional carbon footprints.
+
+7. Transport emissions are rising faster than any other sector
+While many industries are decarbonising, transport emissions have risen over 70% since 1990 .
+Aviation and shipping are particularly difficult to electrify. Even with biofuels or synthetic fuels, deep cuts require less total travel , not just cleaner technology. G.t; Travel reduction is not just helpful—it’s essential for meeting climate goals like the Paris Agreement.
+
+Environmental degradation 
+Wildlife disruption: Constant tourist activity disturbs animal habitats and breeding patterns — for example, boat traffic and noise pollution drive marine species away from feeding areas.
+Deforestation: Expanding resorts, roads, and airports often means clearing forests and coastlines, leading to soil erosion and loss of biodiversity.
+Plastic and waste pollution: Tourists generate massive amounts of plastic bottles, packaging, and sewage that local systems can’t manage; much of it ends up in oceans and forests, harming wildlife.
+Noise & Light Pollution
+Noise: Planes, ships, and constant vehicle traffic disrupt wildlife communication and migration; whales, dolphins, and birds are especially affected by chronic noise levels.
+Light: Bright tourist areas and coastal resorts create artificial lighting that confuses nocturnal species — sea turtle hatchlings often crawl toward hotels instead of the sea.
+Ecosystem impact: These disturbances alter feeding, breeding, and navigation patterns, weakening entire ecosystems over time.
+
+Less travel = infectious diseases spread less
+Global mobility: Air travel allows viruses and bacteria to spread worldwide within hours — as seen with COVID-19, which expanded rapidly through international flights.
+Environmental link: Disease outbreaks often worsen when wildlife habitats are disrupted by tourism and deforestation, increasing human–animal contact.
+Health and emissions benefit: Fewer long-distance trips mean lower emissions and fewer transmission routes for new diseases.
+Short-distance travel</p>
+            
+            <hr>
+            
+            <h2>Reflective Document</h2>
+            <p>1-Do you think the folktales are a good way to learn about the culture they come from?
+I think learning about other cultures with folk tales is a good way to figure out other cultures. After that, any country anywhere in theworld has similar folktales that share the same main ideas. But every culture has unique traditions, and folk tales written in the old times so it’s the root of the. It’s made you understand their symbols and where their cultures come from. For instance, Irish has Celtic symbols, Norwegian has Viking symbols, etc. It teaches you where the symbols derive from, and it helps you get more inside another culture. Further, I can use for to involve and understand to another cultures root in my life.
+
+2-Manny feel that folktales are helpful to understand the university of certain narratives and issues that connect us all. How do you feel about this , as a result of doing the project?
+Many folk tales are very helpful to understand life. And when I was working on the project, I felt that. Even though there are different folktales from shares to same meaning. Therefore, in my group we selected salmon of knowledge and Adam and Evee. Even if they’re written by from different cultures, it shares same main idea that the loss of innocence and gaining knowledge. Further, it also connects us with using meaning of life. Finally, I understand we could share the differences but at the end of line, we share same meaning.
+
+3-How well do you rate the Hofstede culture matrix?
+I don’t think that the Hofstede culture matrix is useful. Because this method puts people into small boxes on a scale of one to ten. Putting different people into the same category into boxes is very dangerous; if you are from the same country with some people from your country it doesn’t mean that you can be the same person. And judging people by looking at the same aspect of like the other from your country, is not a good way to judge. Furthermore, I don’t think that it is going to be useful in my life.
+
+4-What did you personally learn as a result of engaging with folktales in this project? How has engaging with the project influenced the way you may think or behave in the future?
+Folktales influence me in every aspect. Firstly, it teaches me to work with others and and how to be a team player. For instance, when we are doing this project, we get to gather coordinates and try to understand our points. Secondly, it helps with my communication skills. For example, during the project, we are always engaged and communicating. Thirdly, I have experience working with people from different cultures. I understand that every unique work ethic and during I saw that every member in my group sees a different solution. Hence, we got a lot of ideas using a different-looking aspect. Further, I think the main ideas of this project are experiencing working with people from different countries and acknowledging a different sight from a different culture and looking to problems. Finally, this experience is going to help me understand, communicate, and work with people from different backgrounds in my university life and my life after university.</p>
+            
+            <!-- NEW: Added Learning Journal Week 6 -->
+            <hr>
+            <h2>Learning Journal Week 6</h2>
+            <p>Recently you took part in a peer-review process with classmates where you exchanged your writing and received and gave feedback on your drafts using the Ladder of Feedback model and worksheet. Reflect on this experience. How did you feel before, during and after the process? Did the experience match your original expectations? Was the process beneficial in your view? Would you do things differently the next time? How did you use the feedback you received?
+            <br>
+The recent peer review session proved to be an incredibly helpful part of my writing process. I received very useful, detailed feedback from my classmates on many different aspects of my work, which gave me a clear path for revision. My peers pointed out four main areas for improvement. First, they helped me identify and fix several grammar mistakes I had overlooked. Second, they honestly told me that the article was not clear, which meant they couldn't easily obtain the main idea. This was the most critical feedback. Third, my group advised me to explain my concepts more thoroughly, emphasizing that I needed to make the writing more suitable and accessible for any reader, regardless of their knowledge level. Fourth, they suggested I use more formal language and more academic words to elevate the tone of the paper. After the session, I had a clear action plan. I began by correcting all the grammar issues. To address the lack of clarity, I conducted more research on the topic. This provided me with more detailed information and better examples, allowing me to explain my points so that any reader could understand them. I also focused on my language. I realized I had used a lot of repetitive words, so I used synonyms to make the writing more engaging. Finally, I searched for and integrated more academic vocabulary, which helped make the article significantly more suitable and professionalp
+
+            <!-- NEW: Added Learning Journal Week 2 -->
+            <hr>
+            <h2>Learning Journal Week 2</h2>
+            <p>Having just completed your first week on the Trinity International Foundation Programme, what differences and/or similarities have you noticed between the expectations of teachers in your native country to those of your new lecturers?
+           <br>     
+Last week I just completed my first week on IFP (International Foundation Program). I think it was a very nice week. I met a lot of people and they're very nice people. In my first week I noticed differences and similarities in the education system in my country. Similarities, in my classes on Turkey. Teachers want us to take notes here, which is the same too. Also, they’re very strict about coming to classes late. In my high school if you did not attend in the time, you were not allowed to attend to class it’s pretty same. In lectures they told us not to speak a lot because the teacher takes a very difficult to tell the lesson to everybody. After that about assignments, they want us to deliver on time. And last thing that similar on my high school about technologies system like noodle I used a similar thing in my high school. Differences, we have more free time here. In EAP our teacher Mr. Fergus wants us to look at some things on the different ascpet. They want to develop our soft skills and critical thinking sides. Because they want us to develop a mindset against any kind of difficult situation. They want to more participate in class. Also, they want us to join to societies in Trinty. Developed our surroundings with different people with different traits and personalities. To wrap, in the first week of my IFP I noticed a lot of new stuff and the same things.
+            </p>
+        </div>
+    </div>
+
+    <!-- NEW: Modal for Feature 2 -->
+    <div id="modal-feature-2" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-feature-2">&times;</span>
+            <img src="folder/images.jpg" alt="From Darkness" class="modal-img" onerror="this.src='https://placehold.co/400x200/2a2a3a/e0e0e0?text=From+Darkness';">
+            <h2>From Darkness Story</h2>
+            <!-- FIX: Updated Text -->
+            <p>"From Darkness," is an animated short film from Cartoon Saloon based on the Inuit folktale of "The Skeleton Woman." It tells the story of a lonely fisherman who, while searching for food, drifts into haunted waters. There, he discovers something far more than he expected, encountering a skeletal being beneath the waves and, through this meeting, finds an unexpected connection. </p>
+            <!-- FIX: Removed Interpretation Subheading -->
+        </div>
+    </div>
+
+    <!-- NEW: Modal for Feature 3 -->
+    <div id="modal-feature-3" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-feature-3">&times;</span>
+            <img src="folder/download.jpg" alt="Tír na nÓg" class="modal-img" onerror="this.src='httpsMusic://placehold.co/400x200/2a2a3a/e0e0e0?text=Tír+na+nÓg';">
+            <h2>Tír na nÓg</h2>
+            <!-- FIX: Updated Text -->
+            <p>Tír na nÓg is an otherworldly paradise in Irish mythology, a land of eternal youth where time does not pass. The warrior Oisín, of the Fianna, was visited by a beautiful woman on a white horse named Niamh of the Golden Hair. She was a princess from this land and had fallen in love with him. She invited Oisín to come with her to Tír na nÓg, promising a life free of sadness, sickness, and old age. Oisín agreed, and they rode her magical horse across the sea, leaving his old life behind.
+            <br>Oisín lived blissfully with Niamh for what felt like only three years, but he eventually grew homesick for Ireland. Niamh reluctantly let him borrow her horse to visit, giving him one critical warning: he must not let his feet touch the soil of Ireland. When he arrived, he was shocked to find 300 years had passed. While trying to help some men, he fell from his horse. The moment he touched the ground, the 300 years caught up with him, and he instantly aged, withered, and died.</p>
+        </div>
+    </div>
+
+    <!-- NEW: Modal for Feature 4 -->
+    <div id="modal-feature-4" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-feature-4">&times;</span>
+            <img src="folder/uri.jpg" alt="Urashima Tarō" class="modal-img" onerror="this.src='httpss://placehold.co/400x200/2a2a3a/e0e0e0?text=Urashima+Tarō';">
+            <h2>Urashima Tarō</h2>
+            <!-- FIX: Updated Text -->
+            <p>Urashima Tarō was a kind-hearted fisherman who one day saved a small turtle from being tormented by children.The next day, a giant turtle appeared, explaining that the small turtle was Otohime, the princess of the Dragon King. As a reward, the turtle brought Urashima to the Dragon Palace (Ryūgū-jō) beneath the sea. He lived a life of luxury and bliss with the princess, who became his wife, in a land where time seemed to stop.
+            <br>Despite his happiness, after what felt like three days, Urashima missed his mother and his old village and asked to return. The heartbroken princess gave him a parting gift, a beautiful lacquer box called a tamatebako, but made him promise never to open it if he wished to return. When Urashima surfaced, he discovered that 300 years had passed and everyone he knew was gone. Overcome with grief, he forgot the warning and opened the box. A white cloud of smoke—his old age—rushed out, and he instantly withered and turned to dust.</p>
+        </div>
+    </div>
+
+    <!-- NEW: Modal for Feature 5 -->
+    <div id="modal-feature-5" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-feature-5">&times;</span>
+            <img src="folder/de.jpg" alt="Salmon of Knowledge" class="modal-img" onerror="this.src='httpsfs://placehold.co/400x200/2a2a3a/e0e0e0?text=Salmon+of+Knowledge';">
+            <h2>Salmon of Knowledge</h2>
+            <!-- FIX: Updated Text -->
+            <p>In Irish mythology, there was a special salmon that held all the wisdom of the world, as it had eaten nine magical hazelnuts that fell into the Well of Wisdom. A prophecy stated that the first person to eat the fish would gain this knowledge. The poet Finnegas spent years trying to catch this Salmon of Knowledge. He finally caught it and, not wanting the knowledge for himself, gave it to his young apprentice, Fionn mac Cumhaill, to cook, with strict instructions not to eat a single bite.
+            <br>While Fionn was cooking the fish, a drop of hot oil spat onto his thumb. Instinctively, Fionn put his thumb in his mouth to cool the burn, accidentally ingesting a tiny piece of the salmon's skin. When Fionn brought the meal to his master, Finnegas saw a new light of wisdom in the boy's eyes and knew the prophecy was fulfilled. Finnegas had Fionn eat the rest of the salmon, and from that day on, Fionn could gain immense wisdom and foresight simply by biting his thumb.</p>
+        </div>
+    </div>
+
+    <!-- NEW: Modal for Feature 6 (Adam and Eve) -->
+    <div id="modal-feature-6" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-feature-6">&times;</span>
+            <!-- NEW: Added placeholder image -->
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv7LqXryE04PyiM2Gbat9sx_gCfs1CwMZxDDkClgoQDS4jKqM_JUqgiK5HFHAD81PaAj8&usqp=CAU" alt="Adam and Eve" class="modal-img" onerror="this.src='https://placehold.co/400x200/2a2a3a/e0e0e0?text=Adam+and+Eve';">
+            <h2>Adam and Eve</h2>
+            <p>According to the Book of Genesis, God created the first man, Adam, and placed him in a paradise called the Garden of Eden. To provide him with a companion, God created the first woman, Eve, from one of Adam's ribs. They lived in a state of innocence, with only one command from God: they were forbidden to eat the fruit from the Tree of the Knowledge of Good and Evil. However, a serpent tempted Eve, convincing her that the fruit would make her like God. Eve ate the fruit and gave some to Adam, who also ate it, marking the first act of human disobedience.
+            <br>Immediately after eating the fruit, Adam and Eve's eyes were opened, and they realized they were naked, feeling shame for the first time. When God confronted them, they blamed each other and the serpent. As a consequence, God cursed the serpent, ordained that Eve would experience pain in childbirth, and decreed that Adam would have to toil and work the land for food. For their transgression, known as the "Fall of Man," God banished Adam and Eve from the Garden of Eden, introducing sin, suffering, and mortality into the world.</p>
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section.about');
+            const dots = document.querySelectorAll('.scroll-dots .dot');
+
+            // --- Intersection Observer for Active Dot ---
+            const observerOptions = {
+                root: null, 
+                rootMargin: '0px',
+                threshold: 0.3 
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        const activeDot = document.querySelector(`.scroll-dots a[href="#${id}"]`);
+                        
+                        // Check if activeDot exists before trying to modify class
+                        if (activeDot) {
+                            dots.forEach(dot => dot.classList.remove('active'));
+                            activeDot.classList.add('active');
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // --- Smooth Scroll for Buttons and Dots ---
+            // FIX: Added .info a to the selector
+            const allLinks = document.querySelectorAll('.scroll-dots a, .scroll-down-btn, .info a');
+            
+            allLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault(); 
+                    const href = this.getAttribute('href');
+                    const targetElement = document.querySelector(href);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // --- MODAL JAVASCRIPT ---
+            
+            // Helper function to connect modal buttons
+            const setupModal = (modalId, openBtnId, closeBtnId) => {
+                const modal = document.getElementById(modalId);
+                const openBtn = document.getElementById(openBtnId);
+                const closeBtn = document.getElementById(closeBtnId);
+
+                if(openBtn) openBtn.addEventListener('click', () => { if(modal) modal.style.display = 'flex'; });
+                if(closeBtn) closeBtn.addEventListener('click', () => { if(modal) modal.style.display = 'none'; });
+                
+                return modal;
+            };
+
+            // Setup all modals
+            const modal1 = setupModal('portfolio-modal', 'open-portfolio-btn', 'close-modal');
+            const modal2 = setupModal('modal-feature-2', 'open-feature-2', 'close-feature-2');
+            const modal3 = setupModal('modal-feature-3', 'open-feature-3', 'close-feature-3');
+            const modal4 = setupModal('modal-feature-4', 'open-feature-4', 'close-feature-4');
+            const modal5 = setupModal('modal-feature-5', 'open-feature-5', 'close-feature-5');
+            const modal6 = setupModal('modal-feature-6', 'open-feature-6', 'close-feature-6'); // NEW
+
+
+            // When the user clicks anywhere outside of the modal content, close it
+            window.addEventListener('click', (e) => {
+                if (e.target == modal1) { if (modal1) modal1.style.display = 'none'; }
+                if (e.target == modal2) { if (modal2) modal2.style.display = 'none'; }
+                if (e.target == modal3) { if (modal3) modal3.style.display = 'none'; }
+                if (e.target == modal4) { if (modal4) modal4.style.display = 'none'; }
+                if (e.target == modal5) { if (modal5) modal5.style.display = 'none'; }
+                if (e.target == modal6) { if (modal6) modal6.style.display = 'none'; } // NEW
+            });
+
+            // --- Gemini API Javascript Removed ---
+        });
+    </script>
+</body>
+</html>
